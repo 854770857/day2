@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+	<title>Document</title>
+	<link rel="stylesheet" href="css/style.css" />
+</head>
+<body ng-app="app" ng-controller="ctrl">
+	<header class="header">
+		<a href="#" class="glyphicon glyphicon-menu-left"></a>
+		<a href="#" class="glyphicon glyphicon-calendar"></a>
+		<h3>订单支付</h3>
+	</header>
+	<div class="address">
+		<ul>
+			<li><b>sunny</b>
+				<span>188****8888</span>
+			</li>
+			<li><i class="glyphicon glyphicon-map-marker"></i>
+				<i class="glyphicon glyphicon-menu-right"></i>
+				<p>北京市海淀区知春路北京市海淀区知春路北京市海淀区知春路</p>
+			</li>
+		</ul>
+	</div>
+	<section class="section">
+		<div class="commodity">
+			<h4><i class="glyphicon glyphicon-home text-orange"></i>
+				恒之然旗舰店</h4>
+			<dl>
+				<dt><img src="images/img.png" alt=""></dt>
+				<dd><p>维维嚼益嚼水果大豆棒橙味维维嚼
+					益嚼水果大豆棒橙味...</p>
+					<div class="down">
+						<div class="right">
+							<span ng-click="del()">-</span>
+							<span>{{count}}</span>
+							<span ng-click="add()">+</span>
+						</div>
+						<div class="left">
+							<strong>￥{{univalent}}</strong>
+							<div><span>￥{{level}}.00</span></div>
+						</div>
+					</div>
+				</dd>
+			</dl>
+			<ul>
+				<li><span>¥{{univalent}}</span>商品总金额:</li>
+				<li><span>¥{{fare}}</span>运费:</li>
+				<li><span><strong>¥{{totalCount}}</strong></span>总额(含运费):</li>
+			</ul>
+		</div>
+		<div class="pay">
+			<ul>
+				<li>
+					<label class="toggle">
+					<input type="checkbox" ng-checked="{{flag}}">
+					<div class="mar green" ng-click="checked()">
+						<div class="icon"></div>
+					</div>
+				</label>余额支付 ¥{{over}}</li>
+				<li>
+					<label class="toggle">
+						<input type="checkbox" ng-checked="{{flag1}}">
+						<div class="mar green" ng-click="checked1()">
+							<div class="icon"></div>
+						</div>
+					</label>奖金支付 ¥{{prize}}</li>
+				<li><i class="glyphicon glyphicon-menu-right"></i>其他支付方式</li>
+			</ul>
+			<div class="pos" ng-show="{{b}}">
+				金额不足，请选择其他支付方式！
+			</div>
+		</div>
+	</section>
+	<footer class="footer">
+		<div class="left">
+			<div class="zong">总计:
+				<strong>¥{{pay}}</strong>
+			</div>
+			<span>(含运费)</span>
+		</div>
+		<div class="right" ng-click="ok()">
+			提交订单
+		</div>
+	</footer>
+	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript">
+		var app=angular.module("app",[]);
+		app.controller("ctrl",function($scope){
+			$scope.flag=false;
+			$scope.flag1=false;
+			$scope.count=1;
+			$scope.fare=10;
+			$scope.over=100;
+			$scope.prize=100;
+			$scope.level=1000;
+			$scope.univalent=988;
+			all();
+			$scope.ok=function(){
+				if($scope.pay<$scope.totalCount);
+				$scope.b=true;
+			};
+			$scope.checked=function(){
+				if($scope.flag){
+					$scope.flag=!$scope.flag
+				}else{
+					$scope.flag=!$scope.flag
+				}
+				flag();
+			};
+			$scope.checked1=function(){
+				if($scope.flag1){
+					$scope.flag1=!$scope.flag1
+				}else{
+					$scope.flag1=!$scope.flag1
+				}
+				flag();
+			};
+			$scope.del=function(){
+				$scope.count--;
+				if($scope.count<=1) $scope.count=1;
+				all();
+				//$scope.totalCount=$scope.count*$scope.univalent+$scope.fare;
+			};
+			$scope.add=function(){
+				$scope.count++;
+				all();
+				//$scope.totalCount=$scope.count*$scope.univalent+$scope.fare;
+			};
+			function all(){
+				$scope.pay=$scope.totalCount=$scope.count*$scope.univalent+$scope.fare;
+				flag();
+			};
+			function flag(){
+				if($scope.flag){
+					$scope.pay=$scope.totalCount-$scope.over;
+				}
+				if($scope.flag1){
+					$scope.pay=$scope.totalCount-$scope.prize;
+				}
+				if($scope.flag&&$scope.flag1){
+					$scope.pay=$scope.totalCount-$scope.over-$scope.prize;
+				}
+				if(!$scope.flag&&!$scope.flag1){
+					$scope.pay=$scope.totalCount;
+				}
+			}
+
+		})
+	</script>
+</body>
+</html>
